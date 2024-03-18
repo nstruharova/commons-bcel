@@ -137,7 +137,7 @@
         <configuration>
           <testExcludes>
             <testExclude>**/*Benchmark*</testExclude>
-            <textExclude>**/test/</textExclude>
+            <textExclude>../src/test/**.java</textExclude>
           </testExcludes>
           
           <parameters>true</parameters>
