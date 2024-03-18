@@ -140,7 +140,7 @@
           </testExcludes>
           
           <parameters>true</parameters>
-        <useIncrementalCompilation>false</useIncrementalCompilation><includes><include>org/apache/bcel/util/SyntheticRepository.java</include></includes></configuration>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
