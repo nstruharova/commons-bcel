@@ -90,6 +90,7 @@
   </scm>
 
   <build>
+    <testSourceDirectory>src/test</testSourceDirectory>
     <defaultGoal>clean verify apache-rat:check japicmp:cmp checkstyle:check pmd:check spotbugs:check javadoc:javadoc</defaultGoal>
     <plugins>
       <plugin>
@@ -137,7 +138,7 @@
         <configuration>
           <testExcludes>
             <testExclude>**/*Benchmark*</testExclude>
-            <textExclude>../src/test/**.java</textExclude>
+            <textExclude>**.java</textExclude>
           </testExcludes>
           
           <parameters>true</parameters>
