@@ -135,12 +135,16 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
+          <testIncludes>
+            <testInclude>**/**.java</testInclude>
+          </testIncludes>
           <testExcludes>
             <testExclude>**/*Benchmark*</testExclude>
           </testExcludes>
           
           <parameters>true</parameters>
-        <useIncrementalCompilation>false</useIncrementalCompilation><includes><include>org/apache/bcel/util/SyntheticRepository.java</include></includes>
+        <useIncrementalCompilation>false</useIncrementalCompilation>
+          <includes><include>org/apache/bcel/util/SyntheticRepository.java</include></includes>
         </configuration>
       </plugin>
       <plugin>
