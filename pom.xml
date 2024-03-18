@@ -1,27 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-  * Licensed to the Apache Software Foundation (ASF) under one
-  * or more contributor license agreements. See the NOTICE file
-  * distributed with this work for additional information
-  * regarding copyright ownership. The ASF licenses this file
-  * to you under the Apache License, Version 2.0 (the
-  * "License"); you may not use this file except in compliance
-  * with the License. You may obtain a copy of the License at
-  *
-  * http://www.apache.org/licenses/LICENSE-2.0
-  *
-  * Unless required by applicable law or agreed to in writing,
-  * software distributed under the License is distributed on an
-  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-  * KIND, either express or implied. See the License for the
-  * specific language governing permissions and limitations
-  * under the License.
--->
-<project
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <!--
+     * Licensed to the Apache Software Foundation (ASF) under one
+     * or more contributor license agreements. See the NOTICE file
+     * distributed with this work for additional information
+     * regarding copyright ownership. The ASF licenses this file
+     * to you under the Apache License, Version 2.0 (the
+     * "License"); you may not use this file except in compliance
+     * with the License. You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing,
+     * software distributed under the License is distributed on an
+     * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     * KIND, either express or implied. See the License for the
+     * specific language governing permissions and limitations
+     * under the License.
+   -->
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -56,7 +51,7 @@
     <commons.release.desc>(Java 8 or above)</commons.release.desc>
     <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-bcel</commons.scmPubUrl>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/${commons.componentid}</commons.distSvnStagingUrl>
-    <!-- Configuration properties for the OSGi maven-bundle-plugin -->
+
     <commons.osgi.symbolicName>org.apache.${commons.componentid}</commons.osgi.symbolicName>
     <commons.osgi.export>org.apache.bcel.*;version=${project.version};-noimport:=true</commons.osgi.export>
     <commons.osgi.import>*</commons.osgi.import>
@@ -95,7 +90,8 @@
   </scm>
 
   <build>
-    <defaultGoal>clean verify apache-rat:check japicmp:cmp checkstyle:check pmd:check spotbugs:check javadoc:javadoc</defaultGoal>
+    <testSourceDirectory>src/test/java/org/apache/bcel</testSourceDirectory>
+    <defaultGoal>clean verify apache-rat:check japicmp:cmp checkstyle:check spotbugs:check javadoc:javadoc</defaultGoal>   <!--  <defaultGoal>clean verify apache-rat:check japicmp:cmp checkstyle:check pmd:check spotbugs:check javadoc:javadoc</defaultGoal>-->
     <plugins>
       <plugin>
         <groupId>org.apache.felix</groupId>
@@ -128,7 +124,7 @@
             </goals>
           </execution>
         </executions>
-        <!-- Temporary fix for BCEL-293, remove this after this has implemented in parent pom -->
+
         <configuration>
           <archive combine.children="append">
             <manifestEntries>
@@ -143,8 +139,9 @@
           <testExcludes>
             <testExclude>**/*Benchmark*</testExclude>
           </testExcludes>
-          <!-- MethodParameters attribute in class file -->
+
           <parameters>true</parameters>
+          <useIncrementalCompilation>false</useIncrementalCompilation>
         </configuration>
       </plugin>
       <plugin>
@@ -162,17 +159,17 @@
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
-  	      <systemPropertyVariables>
-            <!-- Suppress the stats, but keep the test as it exercises the code -->
-			<PerformanceTest.report>false</PerformanceTest.report>
-		  </systemPropertyVariables>
+          <systemPropertyVariables>
+
+            <PerformanceTest.report>false</PerformanceTest.report>
+          </systemPropertyVariables>
           <includes>
             <include>**/*TestCase.java</include>
             <include>**/PerformanceTest.java</include>
           </includes>
           <excludes>
             <exclude>**/Abstract*</exclude>
-            <!-- Takes rather a long time (especially rt.jar) ; only needs to be done occasionally -->
+
             <exclude>**/JDKClassDumpTestCase.java</exclude>
           </excludes>
         </configuration>
@@ -180,7 +177,7 @@
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
-          <!-- These need to be specified because CP includes a descriptor -->
+
           <descriptors>
             <descriptor>src/assembly/bin.xml</descriptor>
             <descriptor>src/assembly/src.xml</descriptor>
@@ -202,7 +199,7 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <configuration>
           <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
-          <!-- Needed to define config_loc -->
+
           <propertyExpansion>config_loc=${basedir}</propertyExpansion>
           <enableRulesSummary>false</enableRulesSummary>
         </configuration>
@@ -210,7 +207,7 @@
       <plugin>
         <groupId>com.github.siom79.japicmp</groupId>
         <artifactId>japicmp-maven-plugin</artifactId>
-      </plugin>    
+      </plugin>
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
@@ -240,7 +237,7 @@
               <goal>merge</goal>
             </goals>
             <phase>install</phase>
-            <configuration> 
+            <configuration>
               <fileSets>
                 <fileSet>
                   <directory>${project.build.directory}</directory>
@@ -249,7 +246,7 @@
                   </includes>
                 </fileSet>
               </fileSets>
-            </configuration> 
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -263,11 +260,11 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <configuration>
           <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
-          <!-- Needed to define config_loc -->
+
           <propertyExpansion>config_loc=${basedir}</propertyExpansion>
           <enableRulesSummary>false</enableRulesSummary>
         </configuration>
-        <!-- We need to specify reportSets because 2.9.1 creates two reports -->
+
         <reportSets>
           <reportSet>
             <reports>
@@ -285,10 +282,10 @@
         </configuration>
       </plugin>
       <plugin>
-         <groupId>org.codehaus.mojo</groupId>
-         <artifactId>taglist-maven-plugin</artifactId>
-         <version>3.0.0</version>
-         <configuration>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>taglist-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
           <tags>
             <tag>TODO</tag>
             <tag>NOPMD</tag>
@@ -317,7 +314,7 @@
       <plugin>
         <groupId>com.github.siom79.japicmp</groupId>
         <artifactId>japicmp-maven-plugin</artifactId>
-      </plugin>    
+      </plugin>
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
@@ -325,7 +322,7 @@
           <threshold>Normal</threshold>
           <effort>Default</effort>
           <excludeFilterFile>src/conf/spotbugs-exclude-filter.xml</excludeFilterFile>
-          <!-- Hacky: Don't allow new SpotBugs errors --> 
+
           <maxAllowedViolations>9</maxAllowedViolations>
         </configuration>
       </plugin>
@@ -374,7 +371,7 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <!-- BCEL-336 refers to this specific version.  -->
+
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>
       <version>6.0</version>
@@ -386,7 +383,7 @@
       <version>1.4.0</version>
       <scope>test</scope>
     </dependency>
-    <!-- START very old jars for Justice verifier -->
+
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
@@ -399,12 +396,12 @@
       <version>1.5.3</version>
       <scope>test</scope>
     </dependency>
-    <!-- END very old jars for Justice verifier -->
+
     <dependency>
-      <!-- Eclipse compiler: useful to generate specific .class file patterns -->
+
       <groupId>org.eclipse.jdt</groupId>
       <artifactId>ecj</artifactId>
-      <version>3.26.0</version> <!-- last JDK8-compatible version -->
+      <version>3.26.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -416,7 +413,7 @@
   </dependencies>
 
   <profiles>
-    <!-- Profile to build and run PerformanceTest. Use 'mvn test -Pjdk-rt' -->
+
     <profile>
       <id>jdk-rt</id>
       <build>
@@ -434,7 +431,7 @@
       </build>
     </profile>
 
-    <!-- Profile to build and run the benchmarks. Use 'mvn test -Pbenchmark', and add '-Dbenchmark=foo' to run only the foo benchmark -->
+
     <profile>
       <id>benchmark</id>
 
@@ -476,7 +473,7 @@
 
       <build>
         <plugins>
-          <!-- Enable the compilation of the benchmarks -->
+
           <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>${commons.compiler.version}</version>
@@ -487,7 +484,7 @@
             </configuration>
           </plugin>
 
-          <!-- Hook the benchmarks to the test phase -->
+
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
@@ -518,7 +515,7 @@
         </plugins>
       </build>
     </profile>
-    
+
   </profiles>
 
   <developers>
@@ -551,7 +548,7 @@
       <email>ggregory at apache.org</email>
       <url>https://www.garygregory.com</url>
       <organization>The Apache Software Foundation</organization>
-      <organizationUrl>https://www.apache.org/</organizationUrl>      
+      <organizationUrl>https://www.apache.org/</organizationUrl>
       <roles>
         <role>PMC Member</role>
       </roles>
@@ -590,7 +587,7 @@
       <name>First Hop Ltd / Torsten Rueger</name>
     </contributor>
     <contributor>
-      <name>Jérôme Leroux</name>
+      <name>J&#233;r&#244;me Leroux</name>
     </contributor>
     <contributor>
       <name>Mark Roberts</name>

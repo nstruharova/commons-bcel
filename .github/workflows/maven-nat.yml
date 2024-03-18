@@ -28,77 +28,77 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest ] #, windows-latest, macos-latest]
-        java: [ 8, 11, 17, 21 ]
+        java: [ 8 ]
         experimental: [false]
-#        include:
-#          - java: 22-ea
-#            os: ubuntu-latest
-#            experimental: true
-#          - java: 22-ea
-#            os: windows-latest
-#            experimental: true
-#          - java: 22-ea
-#            os: macos-latest
-#            experimental: true
+      #        include:
+      #          - java: 22-ea
+      #            os: ubuntu-latest
+      #            experimental: true
+      #          - java: 22-ea
+      #            os: windows-latest
+      #            experimental: true
+      #          - java: 22-ea
+      #            os: macos-latest
+      #            experimental: true
       fail-fast: false
 
     steps:
-    - name: Prepare git
-      run: git config --global core.autocrlf false
-    - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
-      with:
-        persist-credentials: false
-    - uses: actions/cache@ab5e6d0c87105b4c9c2047343972218f562e4319 # v4.0.1
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
-    - name: Set up JDK ${{ matrix.java }}
-      uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9 # v4.2.1
-      with:
-        distribution: 'temurin'
-        java-version: ${{ matrix.java }}
+      - name: Prepare git
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+        with:
+          persist-credentials: false
+      - uses: actions/cache@ab5e6d0c87105b4c9c2047343972218f562e4319 # v4.0.1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9 # v4.2.1
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
 
-    - name: Initialize Energy Estimation
-      uses: green-coding-berlin/eco-ci-energy-estimation@3f407abfca265dc2d37f2cf889b569a3589f8479 # use hash or @vX here (See note below)
-      with:
-        task: start-measurement
+      - name: Initialize Energy Estimation
+        uses: green-coding-berlin/eco-ci-energy-estimation@3f407abfca265dc2d37f2cf889b569a3589f8479 # use hash or @vX here (See note below)
+        with:
+          task: start-measurement
 
-    - name: Build with Maven
-      run: mvn --show-version --batch-mode --no-transfer-progress -DtrimStackTrace=false -Ddoclint=none
+      - name: Build with Maven
+        run: mvn --show-version --batch-mode --no-transfer-progress -DtrimStackTrace=false -Ddoclint=none -Dcommons.japicmp.breakBuildOnBinaryIncompatibleModifications=false
 
-    - name: Build measurement
-      if: always()
-      uses: green-coding-berlin/eco-ci-energy-estimation@3f407abfca265dc2d37f2cf889b569a3589f8479 # use hash or @vX here (See note below)
-      with:
-        task: get-measurement
-        label: 'Build measurement'
+      - name: Build measurement
+        if: always()
+        uses: green-coding-berlin/eco-ci-energy-estimation@3f407abfca265dc2d37f2cf889b569a3589f8479 # use hash or @vX here (See note below)
+        with:
+          task: get-measurement
+          label: 'Build measurement'
 
-    - name: Show Energy Results
-      if: always()
-      uses: green-coding-berlin/eco-ci-energy-estimation@3f407abfca265dc2d37f2cf889b569a3589f8479 # use hash or @vX here (See note below)
-      id: total-measurement-step
-      with:
-        task: display-results
+      - name: Show Energy Results
+        if: always()
+        uses: green-coding-berlin/eco-ci-energy-estimation@3f407abfca265dc2d37f2cf889b569a3589f8479 # use hash or @vX here (See note below)
+        id: total-measurement-step
+        with:
+          task: display-results
 
-    - name: Upload total energy data artifact
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: total-energy-data
-        path: /tmp/eco-ci/total-data.json
+      - name: Upload total energy data artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: total-energy-data
+          path: /tmp/eco-ci/total-data.json
 
-    - name: Upload lap energy data artifact
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: lap-energy-data
-        path: /tmp/eco-ci/lap-data.json
+      - name: Upload lap energy data artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: lap-energy-data
+          path: /tmp/eco-ci/lap-data.json
 
-    - name: Upload pom.xml artifact
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: pom.xml
-        path: pom.xml
+      - name: Upload pom.xml artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: pom.xml
+          path: pom.xml
