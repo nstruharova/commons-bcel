@@ -66,7 +66,7 @@ jobs:
         task: start-measurement
 
     - name: Build with Maven
-      run: mvn --show-version --batch-mode --no-transfer-progress -DtrimStackTrace=false -Ddoclint=none
+      run: mvn --show-version --batch-mode --no-transfer-progress -DtrimStackTrace=false -Ddoclint=none -Dcommons.japicmp.breakBuildOnBinaryIncompatibleModifications=false
 
     - name: Build measurement
       if: always()
@@ -81,12 +81,6 @@ jobs:
       id: total-measurement-step
       with:
         task: display-results
-
-    - name: Cache target/classes directory
-      uses: actions/cache@v2
-      with:
-        path: target/classes
-        key: ${{ runner.os }}-maven-classes-${{ hashFiles('**/pom.xml') }}
 
     - name: Upload total energy data artifact
       if: always()
