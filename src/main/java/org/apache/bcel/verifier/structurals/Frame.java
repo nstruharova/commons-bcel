@@ -118,7 +118,7 @@ public class Frame {
      */
     @Override
     public String toString() {
-        final StringBuilder s = new StringBuilder("Local Variables:\n");
+        StringBuilder s = new StringBuilder("Local Variables:\n");
         s.append(locals);
         s.append("OperandStack:\n");
         s.append(stack);
