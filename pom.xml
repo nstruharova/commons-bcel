@@ -91,7 +91,7 @@
 
   <build>
     <testSourceDirectory>src/test/java/org/apache/bcel</testSourceDirectory>
-    <defaultGoal>clean verify apache-rat:check japicmp:cmp checkstyle:check spotbugs:check javadoc:javadoc</defaultGoal>   
+    <defaultGoal>clean verify apache-rat:check japicmp:cmp checkstyle:check spotbugs:check javadoc:javadoc</defaultGoal>   <!--  <defaultGoal>clean verify apache-rat:check japicmp:cmp checkstyle:check pmd:check spotbugs:check javadoc:javadoc</defaultGoal>-->
     <plugins>
       <plugin>
         <groupId>org.apache.felix</groupId>
@@ -137,13 +137,12 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
           <testExcludes>
-            <testExclude>**/*.java</testExclude>
             <testExclude>**/*Benchmark*</testExclude>
           </testExcludes>
 
           <parameters>true</parameters>
           <useIncrementalCompilation>false</useIncrementalCompilation>
-        <includes><include>org/apache/bcel/util/SyntheticRepository.java</include></includes></configuration>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
