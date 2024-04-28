@@ -40,30 +40,33 @@ import org.apache.bcel.util.BCELComparator;
  */
 public class FieldGen extends FieldGenOrMethodGen {
 
-    private static BCELComparator<FieldGen> bcelComparator = new BCELComparator<FieldGen>() {
+    private static BCELComparator bcelComparator = new BCELComparator() {
 
         @Override
-        public boolean equals(final FieldGen a, final FieldGen b) {
-            return a == b || a != null && b != null && Objects.equals(a.getName(), b.getName()) && Objects.equals(a.getSignature(), b.getSignature());
+        public boolean equals(final Object o1, final Object o2) {
+            final FieldGen THIS = (FieldGen) o1;
+            final FieldGen THAT = (FieldGen) o2;
+            return Objects.equals(THIS.getName(), THAT.getName()) && Objects.equals(THIS.getSignature(), THAT.getSignature());
         }
 
         @Override
-        public int hashCode(final FieldGen o) {
-            return o != null ? Objects.hash(o.getSignature(), o.getName()) : 0;
+        public int hashCode(final Object o) {
+            final FieldGen THIS = (FieldGen) o;
+            return THIS.getSignature().hashCode() ^ THIS.getName().hashCode();
         }
     };
 
     /**
-     * @return Comparison strategy object.
+     * @return Comparison strategy object
      */
-    public static BCELComparator<FieldGen> getComparator() {
+    public static BCELComparator getComparator() {
         return bcelComparator;
     }
 
     /**
-     * @param comparator Comparison strategy object.
+     * @param comparator Comparison strategy object
      */
-    public static void setComparator(final BCELComparator<FieldGen> comparator) {
+    public static void setComparator(final BCELComparator comparator) {
         bcelComparator = comparator;
     }
 
@@ -74,8 +77,8 @@ public class FieldGen extends FieldGenOrMethodGen {
     /**
      * Instantiate from existing field.
      *
-     * @param field Field object.
-     * @param cp constant pool (must contain the same entries as the field's constant pool).
+     * @param field Field object
+     * @param cp constant pool (must contain the same entries as the field's constant pool)
      */
     public FieldGen(final Field field, final ConstantPoolGen cp) {
         this(field.getAccessFlags(), Type.getType(field.getSignature()), field.getName(), cp);
@@ -180,7 +183,7 @@ public class FieldGen extends FieldGenOrMethodGen {
      */
     @Override
     public boolean equals(final Object obj) {
-        return obj instanceof FieldGen && bcelComparator.equals(this, (FieldGen) obj);
+        return bcelComparator.equals(this, obj);
     }
 
     /**

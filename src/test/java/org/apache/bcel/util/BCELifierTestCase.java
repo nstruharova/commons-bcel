@@ -48,7 +48,8 @@ public class BCELifierTestCase extends AbstractTestCase {
     private String canonHashRef(String input) {
         input = input.replaceAll("#\\d+", "#n"); // numbers may vary in length
         input = input.replaceAll(" +", " "); // collapse spaces
-        return input.replaceAll("//.+", "");
+        input = input.replaceAll("//.+", ""); // comments may vary
+        return input;
     }
 
     private String exec(final File workDir, final String... args) throws Exception {
@@ -173,7 +174,7 @@ public class BCELifierTestCase extends AbstractTestCase {
 
     /*
      * Dumps a class using "javap" and compare with the same class recreated using BCELifier, "javac", "java" and dumped with "javap".
-     *
+     * 
      * TODO: detect if JDK present and skip test if not
      */
     @ParameterizedTest

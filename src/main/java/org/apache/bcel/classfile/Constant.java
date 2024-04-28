@@ -30,23 +30,26 @@ import org.apache.bcel.util.BCELComparator;
  */
 public abstract class Constant implements Cloneable, Node {
 
-    private static BCELComparator<Constant> bcelComparator = new BCELComparator<Constant>() {
+    private static BCELComparator bcelComparator = new BCELComparator() {
 
         @Override
-        public boolean equals(final Constant a, final Constant b) {
-            return a == b || a != null && b != null && Objects.equals(a.toString(), b.toString());
+        public boolean equals(final Object o1, final Object o2) {
+            final Constant THIS = (Constant) o1;
+            final Constant THAT = (Constant) o2;
+            return Objects.equals(THIS.toString(), THAT.toString());
         }
 
         @Override
-        public int hashCode(final Constant o) {
-            return o != null ? Objects.hashCode(o.toString()) : 0;
+        public int hashCode(final Object o) {
+            final Constant THIS = (Constant) o;
+            return THIS.toString().hashCode();
         }
     };
 
     /**
-     * @return Comparison strategy object.
+     * @return Comparison strategy object
      */
-    public static BCELComparator<Constant> getComparator() {
+    public static BCELComparator getComparator() {
         return bcelComparator;
     }
 
@@ -104,7 +107,7 @@ public abstract class Constant implements Cloneable, Node {
     /**
      * @param comparator Comparison strategy object
      */
-    public static void setComparator(final BCELComparator<Constant> comparator) {
+    public static void setComparator(final BCELComparator comparator) {
         bcelComparator = comparator;
     }
 
@@ -165,7 +168,7 @@ public abstract class Constant implements Cloneable, Node {
      */
     @Override
     public boolean equals(final Object obj) {
-        return obj instanceof Constant && bcelComparator.equals(this, (Constant) obj);
+        return bcelComparator.equals(this, obj);
     }
 
     /**

@@ -36,16 +36,19 @@ public final class Method extends FieldOrMethod {
      */
     public static final Method[] EMPTY_ARRAY = {};
 
-    private static BCELComparator<Method> bcelComparator = new BCELComparator<Method>() {
+    private static BCELComparator bcelComparator = new BCELComparator() {
 
         @Override
-        public boolean equals(final Method a, final Method b) {
-            return a == b || a != null && b != null && Objects.equals(a.getName(), b.getName()) && Objects.equals(a.getSignature(), b.getSignature());
+        public boolean equals(final Object o1, final Object o2) {
+            final Method THIS = (Method) o1;
+            final Method THAT = (Method) o2;
+            return Objects.equals(THIS.getName(), THAT.getName()) && Objects.equals(THIS.getSignature(), THAT.getSignature());
         }
 
         @Override
-        public int hashCode(final Method o) {
-            return o != null ? Objects.hash(o.getSignature(), o.getName()) : 0;
+        public int hashCode(final Object o) {
+            final Method THIS = (Method) o;
+            return THIS.getSignature().hashCode() ^ THIS.getName().hashCode();
         }
     };
 
@@ -55,20 +58,20 @@ public final class Method extends FieldOrMethod {
     static final Method[] EMPTY_METHOD_ARRAY = {};
 
     /**
-     * @return Comparison strategy object.
+     * @return Comparison strategy object
      */
-    public static BCELComparator<Method> getComparator() {
+    public static BCELComparator getComparator() {
         return bcelComparator;
     }
 
     /**
-     * @param comparator Comparison strategy object.
+     * @param comparator Comparison strategy object
      */
-    public static void setComparator(final BCELComparator<Method> comparator) {
+    public static void setComparator(final BCELComparator comparator) {
         bcelComparator = comparator;
     }
 
-    /** Annotations defined on the parameters of a method. */
+    // annotations defined on the parameters of a method
     private ParameterAnnotationEntry[] parameterAnnotationEntries;
 
     /**
@@ -135,7 +138,7 @@ public final class Method extends FieldOrMethod {
      */
     @Override
     public boolean equals(final Object obj) {
-        return obj instanceof Method && bcelComparator.equals(this, (Method) obj);
+        return bcelComparator.equals(this, obj);
     }
 
     /**

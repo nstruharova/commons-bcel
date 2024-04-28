@@ -1,0 +1,104 @@
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# name: ExpOriginal
+
+# on: push
+
+# permissions:
+#   contents: read
+
+# jobs:
+#   build:
+
+#     runs-on: self-hosted # ${{ matrix.os }}
+#     continue-on-error: ${{ matrix.experimental }}
+#     strategy:
+#       matrix:
+#         os: [ubuntu-latest ] #, windows-latest, macos-latest]
+#         java: [ 8 ]
+#         experimental: [false]
+#       #        include:
+#       #          - java: 22-ea
+#       #            os: ubuntu-latest
+#       #            experimental: true
+#       #          - java: 22-ea
+#       #            os: windows-latest
+#       #            experimental: true
+#       #          - java: 22-ea
+#       #            os: macos-latest
+#       #            experimental: true
+#       fail-fast: false
+
+#     steps:
+#       - name: Prepare git
+#         run: git config --global core.autocrlf false
+#       - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+#         with:
+#           persist-credentials: false
+#       - uses: actions/cache@ab5e6d0c87105b4c9c2047343972218f562e4319 # v4.0.1
+#         with:
+#           path: ~/.m2/repository
+#           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#           restore-keys: |
+#             ${{ runner.os }}-maven-
+#       - name: Set up JDK ${{ matrix.java }}
+#         uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9 # v4.2.1
+#         with:
+#           distribution: 'temurin'
+#           java-version: ${{ matrix.java }}
+
+#       - name: Initialize Energy Estimation
+#         uses: green-coding-berlin/eco-ci-energy-estimation@3f407abfca265dc2d37f2cf889b569a3589f8479 # use hash or @vX here (See note below)
+#         with:
+#           task: start-measurement
+
+#       - name: Build with Maven
+#         run: mvn clean:clean compiler:compile -f pom.xml
+
+#       - name: Build measurement
+#         if: always()
+#         uses: green-coding-berlin/eco-ci-energy-estimation@3f407abfca265dc2d37f2cf889b569a3589f8479 # use hash or @vX here (See note below)
+#         with:
+#           task: get-measurement
+#           label: 'Build measurement'
+
+#       - name: Show Energy Results
+#         if: always()
+#         uses: green-coding-berlin/eco-ci-energy-estimation@3f407abfca265dc2d37f2cf889b569a3589f8479 # use hash or @vX here (See note below)
+#         id: total-measurement-step
+#         with:
+#           task: display-results
+
+#       - name: Upload total energy data artifact
+#         if: always()
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: total-energy-data
+#           path: /tmp/eco-ci/total-data.json
+
+#       - name: Upload lap energy data artifact
+#         if: always()
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: lap-energy-data
+#           path: /tmp/eco-ci/lap-data.json
+
+#       - name: Upload pom.xml artifact
+#         if: always()
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: pom.xml
+#           path: pom.xml

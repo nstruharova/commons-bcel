@@ -17,27 +17,26 @@
 package org.apache.bcel.util;
 
 /**
- * Used for BCEL comparison strategy.
+ * Used for BCEL comparison strategy
  *
- * @param <T> What type we are comparing.
  * @since 5.2
  */
-public interface BCELComparator<T> {
+public interface BCELComparator {
 
     /**
-     * Compares two objects and return what a.equals(b) should return.
+     * Compare two objects and return what THIS.equals(THAT) should return
      *
-     * @param a an object.
-     * @param b an object to be compared with {@code a} for equality.
-     * @return {@code true} if the arguments are equal to each other and {@code false} otherwise.
+     * @param THIS
+     * @param THAT
+     * @return true if and only if THIS equals THAT
      */
-    boolean equals(T a, T b);
+    boolean equals(Object THIS, Object THAT);
 
     /**
-     * Gets the hash code for o.hashCode()
+     * Return hash code for THIS.hashCode()
      *
-     * @param o
-     * @return hash code for o.hashCode()
+     * @param THIS
+     * @return hash code for THIS.hashCode()
      */
-    int hashCode(T o);
+    int hashCode(Object THIS);
 }

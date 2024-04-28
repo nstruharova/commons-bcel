@@ -37,16 +37,19 @@ public final class Field extends FieldOrMethod {
      */
     public static final Field[] EMPTY_ARRAY = {};
 
-    private static BCELComparator<Field> bcelComparator = new BCELComparator<Field>() {
+    private static BCELComparator bcelComparator = new BCELComparator() {
 
         @Override
-        public boolean equals(final Field a, final Field b) {
-            return a == b || a != null && b != null && Objects.equals(a.getName(), b.getName()) && Objects.equals(a.getSignature(), b.getSignature());
+        public boolean equals(final Object o1, final Object o2) {
+            final Field THIS = (Field) o1;
+            final Field THAT = (Field) o2;
+            return Objects.equals(THIS.getName(), THAT.getName()) && Objects.equals(THIS.getSignature(), THAT.getSignature());
         }
 
         @Override
-        public int hashCode(final Field o) {
-            return o != null ? Objects.hash(o.getSignature(), o.getName()) : 0;
+        public int hashCode(final Object o) {
+            final Field THIS = (Field) o;
+            return THIS.getSignature().hashCode() ^ THIS.getName().hashCode();
         }
     };
 
@@ -56,23 +59,23 @@ public final class Field extends FieldOrMethod {
     static final Field[] EMPTY_FIELD_ARRAY = {};
 
     /**
-     * @return Comparison strategy object.
+     * @return Comparison strategy object
      */
-    public static BCELComparator<Field> getComparator() {
+    public static BCELComparator getComparator() {
         return bcelComparator;
     }
 
     /**
-     * @param comparator Comparison strategy object.
+     * @param comparator Comparison strategy object
      */
-    public static void setComparator(final BCELComparator<Field> comparator) {
+    public static void setComparator(final BCELComparator comparator) {
         bcelComparator = comparator;
     }
 
     /**
      * Constructs object from file stream.
      *
-     * @param file Input stream.
+     * @param file Input stream
      */
     Field(final DataInput file, final ConstantPool constantPool) throws IOException, ClassFormatException {
         super(file, constantPool);
@@ -125,7 +128,7 @@ public final class Field extends FieldOrMethod {
      */
     @Override
     public boolean equals(final Object obj) {
-        return obj instanceof Field && bcelComparator.equals(this, (Field) obj);
+        return bcelComparator.equals(this, obj);
     }
 
     /**

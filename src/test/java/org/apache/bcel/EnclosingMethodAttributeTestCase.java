@@ -31,7 +31,6 @@ import org.apache.bcel.util.SyntheticRepository;
 import org.junit.jupiter.api.Test;
 
 public class EnclosingMethodAttributeTestCase extends AbstractTestCase {
-
     /**
      * Check that we can save and load the attribute correctly.
      */

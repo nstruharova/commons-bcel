@@ -48,14 +48,17 @@ public class Frame {
     }
 
     /**
+     *
      */
     private final LocalVariables locals;
 
     /**
+     *
      */
     private final OperandStack stack;
 
     /**
+     *
      */
     public Frame(final int maxLocals, final int maxStack) {
         locals = new LocalVariables(maxLocals);
@@ -63,6 +66,7 @@ public class Frame {
     }
 
     /**
+     *
      */
     public Frame(final LocalVariables locals, final OperandStack stack) {
         this.locals = locals;
@@ -70,6 +74,7 @@ public class Frame {
     }
 
     /**
+     *
      */
     @Override
     protected Object clone() {
@@ -77,6 +82,7 @@ public class Frame {
     }
 
     /**
+     *
      */
     @Override
     public boolean equals(final Object o) {
@@ -88,18 +94,21 @@ public class Frame {
     }
 
     /**
+     *
      */
     public Frame getClone() {
         return (Frame) clone();
     }
 
     /**
+     *
      */
     public LocalVariables getLocals() {
         return locals;
     }
 
     /**
+     *
      */
     public OperandStack getStack() {
         return stack;
@@ -118,10 +127,10 @@ public class Frame {
      */
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder("Local Variables:\n");
-        s.append(locals);
-        s.append("OperandStack:\n");
-        s.append(stack);
-        return s.toString();
+        String s = "Local Variables:\n";
+        s += locals;
+        s += "OperandStack:\n";
+        s += stack;
+        return s;
     }
 }
