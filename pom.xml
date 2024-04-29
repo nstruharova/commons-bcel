@@ -254,9 +254,9 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <testExcludes>
+          <!-- <testExcludes>
             <testExclude>**/*Benchmark*</testExclude>
-          </testExcludes>
+          </testExcludes> -->
           <!-- MethodParameters attribute in class file -->
           <parameters>true</parameters>
         </configuration>
