@@ -234,7 +234,7 @@ public interface Visitor {
      * @param record component to visit
      * @since 6.9.0
      */
-    default void visitRecordComponent(final RecordComponentInfo record) {
+    default void visitRecordComponent(RecordComponentInfo record) {
      // noop
     }
 

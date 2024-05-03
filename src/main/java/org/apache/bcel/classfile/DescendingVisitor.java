@@ -505,7 +505,7 @@ public class DescendingVisitor implements Visitor {
     }
 
     @Override
-    public void visitRecord(final Record record) {
+    public void visitRecord(Record record) {
         stack.push(record);
         record.accept(visitor);
         accept(record.getComponents());
@@ -513,7 +513,7 @@ public class DescendingVisitor implements Visitor {
     }
 
     @Override
-    public void visitRecordComponent(final RecordComponentInfo recordComponentInfo) {
+    public void visitRecordComponent(RecordComponentInfo recordComponentInfo) {
         stack.push(recordComponentInfo);
         recordComponentInfo.accept(visitor);
         stack.pop();

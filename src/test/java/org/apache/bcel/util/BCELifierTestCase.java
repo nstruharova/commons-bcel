@@ -35,7 +35,6 @@ import org.apache.bcel.HelloWorldCreator;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Utility;
 import org.apache.bcel.generic.BinaryOpCreator;
-import org.apache.commons.lang3.SystemProperties;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -43,7 +42,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class BCELifierTestCase extends AbstractTestCase {
 
     private static final String EOL = System.lineSeparator();
-    public static final String CLASSPATH = "." + File.pathSeparator + SystemProperties.getJavaClassPath();
+    public static final String CLASSPATH = "." + File.pathSeparator + System.getProperty("java.class.path");
 
     // Canonicalise the javap output so it compares better
     private String canonHashRef(String input) {

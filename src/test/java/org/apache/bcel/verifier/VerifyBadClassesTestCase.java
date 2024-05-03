@@ -35,7 +35,6 @@ import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.SystemProperties;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -50,7 +49,7 @@ public class VerifyBadClassesTestCase {
         command.add("-ea");
 
         command.add("-classpath");
-        command.add(SystemProperties.getJavaClassPath() + ":" + testDir);
+        command.add(System.getProperty("java.class.path") + ":" + testDir);
 
         command.add("org.apache.bcel.verifier.Verifier");
         command.add(className);

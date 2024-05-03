@@ -33,7 +33,7 @@
   <groupId>org.apache.bcel</groupId>
   <artifactId>bcel</artifactId>
   <packaging>jar</packaging>
-  <version>6.9.1-SNAPSHOT</version>
+  <version>6.9.0-SNAPSHOT</version>
   <name>Apache Commons BCEL</name>
   <description>Apache Commons Bytecode Engineering Library</description>
 
@@ -43,7 +43,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <project.build.outputTimestamp>2024-04-27T12:58:11Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2024-02-25T17:02:58Z</project.build.outputTimestamp>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <commons.componentid>bcel</commons.componentid>
@@ -68,14 +68,12 @@
     <assertj.version>3.25.3</assertj.version>
     <jna.version>5.14.0</jna.version>
     <japicmp.skip>false</japicmp.skip>
-    <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
-
-    <!-- JaCoCo on Java 8 is different from other versions. On JDK9+ there is a profile -->
     <!-- JaCoCo: Don't make code coverage worse than: -->
-    <commons.jacoco.classRatio>0.89</commons.jacoco.classRatio>
+    <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
+    <commons.jacoco.classRatio>0.90</commons.jacoco.classRatio>
     <commons.jacoco.instructionRatio>0.65</commons.jacoco.instructionRatio>
     <commons.jacoco.methodRatio>0.70</commons.jacoco.methodRatio>
-    <commons.jacoco.branchRatio>0.59</commons.jacoco.branchRatio>
+    <commons.jacoco.branchRatio>0.58</commons.jacoco.branchRatio>
     <commons.jacoco.lineRatio>0.68</commons.jacoco.lineRatio>
     <commons.jacoco.complexityRatio>0.58</commons.jacoco.complexityRatio>
   </properties>
@@ -497,6 +495,7 @@
               </testIncludes>
             </configuration>
           </plugin>
+
           <!-- Hook the benchmarks to the test phase -->
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
@@ -528,22 +527,7 @@
         </plugins>
       </build>
     </profile>
-    <profile>
-      <!-- Java 9 and up -->
-      <id>java-9-up</id>
-      <activation>
-        <jdk>[9,)</jdk>
-      </activation>
-      <properties>
-        <!-- JaCoCo: Don't make code coverage worse than: -->
-        <commons.jacoco.classRatio>0.90</commons.jacoco.classRatio>
-        <commons.jacoco.instructionRatio>0.65</commons.jacoco.instructionRatio>
-        <commons.jacoco.methodRatio>0.70</commons.jacoco.methodRatio>
-        <commons.jacoco.branchRatio>0.58</commons.jacoco.branchRatio>
-        <commons.jacoco.lineRatio>0.68</commons.jacoco.lineRatio>
-        <commons.jacoco.complexityRatio>0.58</commons.jacoco.complexityRatio>
-      </properties>
-    </profile>
+    
   </profiles>
 
   <developers>
