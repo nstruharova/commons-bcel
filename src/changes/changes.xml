@@ -59,10 +59,7 @@ The <action> type attribute can be add,update,fix,remove.
   Defining changes.version allows one to create the RN without first removing the SNAPSHOT suffix.
    -->
   <body>
-    <release version="6.9.0" date="YYYY-MM-DD" description="Maintenance and bug fix release.">
-      <!-- ADD -->
-      <action                  type="update" dev="ggregory" due-to="Pablo Nicolas Diaz, Gary Gregory, Paul King, Mark Roberts">Add Support for Java 16 records #290.</action>
-      <!-- FIX -->
+    <release version="6.8.3" date="YYYY-MM-DD" description="Maintenance and bug fix release.">
       <action                  type="update" dev="ggregory" due-to="Heewon Lee">Add null guard for InstructionFactory.createInvoke() #289.</action>
       <action                  type="update" dev="ggregory" due-to="Gary Gregory">Avoid possible NullPointerException in org.apache.bcel.classfile.DescendingVisitor.accept(E[]).</action>
       <action                  type="update" dev="ggregory" due-to="Gary Gregory">Avoid possible NullPointerException in AnnotationEntryGen.getAnnotationAttributes(ConstantPoolGen, AnnotationEntryGen[]).</action>
@@ -102,7 +99,7 @@ The <action> type attribute can be add,update,fix,remove.
       <!-- UPDATE -->
       <action                  type="update" dev="ggregory" due-to="Dependabot">Bump org.apache.commons:commons-parent from 66 to 69 #283, #297.</action>
       <action                  type="update" dev="ggregory" due-to="Dependabot">Bump org.jetbrains.kotlin:kotlin-stdlib from 1.9.22 to 1.9.23 #284.</action>
-      <action                  type="update" dev="ggregory" due-to="Dependabot">Bump commons-io:commons-io from 2.15.1 to 2.16.1 #295, #300.</action>
+      <action                  type="update" dev="ggregory" due-to="Dependabot">Bump commons-io:commons-io from 2.15.1 to 2.16.0 #295.</action>
     </release>
     <release version="6.8.2" date="2024-02-21" description="Maintenance and bug fix release.">
       <!-- FIX -->

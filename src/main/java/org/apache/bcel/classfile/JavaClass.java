@@ -133,10 +133,8 @@ public class JavaClass extends AccessFlags implements Cloneable, Node, Comparabl
     private boolean isAnonymous;
 
     private boolean isNested;
-    private boolean isRecord;
 
     private boolean computedNestedTypeStatus;
-    private boolean computedRecord;
 
     /**
      * In cases where we go ahead and create something, use the default SyntheticRepository, because we don't know any
@@ -257,19 +255,6 @@ public class JavaClass extends AccessFlags implements Cloneable, Node, Comparabl
     @Override
     public int compareTo(final JavaClass obj) {
         return getClassName().compareTo(obj.getClassName());
-    }
-
-    private void computeIsRecord() {
-        if (computedRecord) {
-            return;
-        }
-        for (final Attribute attribute : this.attributes) {
-            if (attribute instanceof Record) {
-                isRecord = true;
-                break;
-            }
-        }
-        this.computedRecord = true;
     }
 
     private void computeNestedTypeStatus() {
@@ -754,17 +739,6 @@ public class JavaClass extends AccessFlags implements Cloneable, Node, Comparabl
     public final boolean isNested() {
         computeNestedTypeStatus();
         return this.isNested;
-    }
-
-    /**
-     * Tests whether this class was declared as a record
-     *
-     * @return true if a record attribute is present, false otherwise.
-     * @since 6.9.0
-     */
-    public boolean isRecord() {
-        computeIsRecord();
-        return this.isRecord;
     }
 
     public final boolean isSuper() {
